@@ -1,5 +1,5 @@
 # coding=utf-8
-
+# 
 ########################################################################################################################
 ### Do not forget to adjust the following variables to your own plugin.
 
@@ -21,10 +21,10 @@ plugin_version = "0.1.3"
 plugin_description = """Robo's theme for OctoPrint"""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Allen McAfee"
+plugin_author = "Robo"
 
 # The plugin's author's mail address.
-plugin_author_email = "allen@robo3d.com"
+plugin_author_email = "developer@robo3d.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
 plugin_url = "https://github.com/AllenMcAfee/OctoPrint-robotheme"
