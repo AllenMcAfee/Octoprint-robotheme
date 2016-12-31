@@ -152,20 +152,8 @@ $(function() {
     }
 
     /* Modified from OctoPrint
-     * Reason: Change homing button to run G28 & G29 instead of built in homing function
+     * Reason: Adding additional controls for z-offset wizard
      */
-    self.onBeforeBinding = function () {
-      $("#customControls_containerTemplate_collapsable, #customControls_containerTemplate_nameless").html(function() {
-        return $(this).html().replace(/"custom_section">/g, '"custom_section" data-bind="css: { plugin_control: (plugin_control) }">');
-      });
-      self.settings = self.settings.settings.plugins.robotheme;
-    };
-
-    self.control.onBeforeBinding = function () {
-      $("#control-xyhome").attr("data-bind", function() {
-        return $(this).attr("data-bind").replace(/sendHomeCommand\(\[\'x\', \'y\'\]\)/g, "sendCustomCommand({type:'commands',commands:['G28', 'G29']})");
-      });
-    };
 
     self.getAdditionalControls = function() {
       return [
@@ -298,7 +286,7 @@ $(function() {
 
           var actualTemp = actuals && actuals.length ? formatTemperature(actuals[actuals.length - 1][1]) : "-";
           var targetTemp = targets && targets.length ? formatTemperature(targets[targets.length - 1][1]) : "-";
-
+         //Change labels for hotend and build plate
           if (heaterOptions[type].name == "T") {
             heaterOptions[type].name = "Hotend";
           } else if (heaterOptions[type].name == "Bed") {
@@ -342,6 +330,7 @@ $(function() {
       $("#temperature-graph").closest(".row").removeAttr("style");
       $("#temperature-graph").closest(".row").attr("class", "row-fluid");
 
+      //
       $("#settings_dialog_label").text("Settings");
       document.title = "Robo C2";
       $("#navbar .brand").html("<img src='/plugin/robotheme/static/logo.png' />");
@@ -360,7 +349,7 @@ $(function() {
       } else {
         $("#control_wrapper").after("<div id='terminal_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#terminal_main'><i class='icon-info-sign'></i> Commands <div class='terminal_input'></div></a></div><div id='terminal_main' class='accordion-body collapse'><div class='accordion-inner'></div></div>");
       }
-
+      //Make accordian rows, instead of default tabbed UI  
       $("#temperature-graph").parent().next(".row-fluid").prependTo("#temperature_main .accordion-inner");
       $("#temperature-graph").prependTo("#temperature_main .accordion-inner");
       $("#temperature-graph").wrap("<div class='temp-graph-wrapper'></div>");
@@ -372,7 +361,7 @@ $(function() {
 
       $('link[rel="shortcut icon"]').attr('href', '~/Octoprint-robotheme/octoprint-robotheme/static/favicon.ico');
       $("#terminal-output").addClass("well");
-
+       
       $("#terminal_main").after("<div class='panel-footer'><div class='row-fluid'><div class='span8 terminal-textbox'></div><div class='span4 terminal-submit'></div></div></div>");
       $("#terminal_wrapper .accordion-heading").append("<div class='heading_buttons'><div class='label line-container'></div><button type='button' class='btn btn-default btn-gradient btn-sm dropdown-toggle' data-toggle='dropdown'><span class='caret'></span></button><ul class='dropdown-menu pull-right terminal-options' role='menu'></ul></div>");
       $(".terminal span[data-bind*='lineCount']").appendTo("#terminal_wrapper .heading_buttons .label");
@@ -421,7 +410,7 @@ $(function() {
         $(this).css('width', $(this).width());
       });
 
-      // Legend/tooltip for Flot chart
+      // Legend/tooltip for Flot chart - adapted from Voxel8
       var updateLegendTimeout = null;
       var latestPosition = null;
 
